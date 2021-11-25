@@ -1,0 +1,1 @@
+SUCCESS = {"code": 200, "message": "success"}

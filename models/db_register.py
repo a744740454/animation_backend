@@ -12,9 +12,10 @@ def create_db_url():
     db_url = '{}:{}@{}:{}/{}'.format(username, password, host, port, db)
     return db_url
 
+
 def create_session():
     db_url = create_db_url()
-    db_url = 'mysql+mysqlconnector://' + db_url
+    db_url = 'mysql+pymysql://' + db_url
     # 初始化数据库连接:
     engine = create_engine(db_url)
     # 创建DBSession类型:
