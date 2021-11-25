@@ -1,6 +1,8 @@
-from models.user.User import User
+from models.user.User import UserInfo
 
 
 def get_metadata():
-    metadata = [User.metadata]
+    metadata = [
+        UserInfo.metadata,
+    ]
     return metadata

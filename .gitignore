@@ -66,3 +66,4 @@ test_outs/
 universal/protocols/inner_protobuf_protocol/stp_common
 zipped_logs
 sql_back_ups
+animation_web/versions/*
