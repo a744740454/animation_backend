@@ -1,8 +1,8 @@
 mysql:
   host: 127.0.0.1
-  port: 14006
-  user: bito
+  port: 9999
+  user: root
   password: bitorobotics
-  db: stp_complete_api
+  db: animation
   autocommit: true
 

@@ -1,32 +1,19 @@
 import os
 import sys
 from logging.config import fileConfig
-
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
 from alembic import context
 from models.init import get_metadata
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
+from models.db_register import create_db_url
+
 config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
+db_url = 'mysql+pymysql://'+create_db_url()
+config.set_main_option("sqlalchemy.url", db_url)
 fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 target_metadata = get_metadata()
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline():
