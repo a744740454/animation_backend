@@ -9,6 +9,6 @@ def middleware_register(app):
     app.register_blueprint(middleware)
 
 
-@middleware.errorhandler(ParamValidErr)
+@middleware.app_errorhandler(ParamValidErr)
 def param_valid_exception(err):
     return response.response(res_code.ERR_PARAM, err.msg)

@@ -2,6 +2,7 @@ from app.api.base.controller import BaseView
 from app.api.user.service import RegisterService
 from common.response import response
 from flask import request
+from protocols.user_protocols.protocol import UserInfoProtocol
 
 class LoginController(BaseView):
     methods = ["GET"]  # 允许的请求方式
@@ -17,5 +18,7 @@ class RegisterController(BaseView):
     @classmethod
     def post(cls):
         request_json = request.json
+        reg_protocol = UserInfoProtocol()
+        reg_protocol.validate_for_api()
         status, result = RegisterService.register(request_json)
         return response(status, result)

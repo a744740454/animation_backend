@@ -18,4 +18,3 @@ class BaseForm(Form):
         if not valid:
             # form errors
             raise ParamValidErr(msg=self.errors)
-        return self
