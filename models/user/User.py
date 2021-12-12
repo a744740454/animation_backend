@@ -6,7 +6,7 @@ class UserInfo(Base):
     __tablename__ = 'user_info'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(20))
+    username = Column(String(20))
     email = Column(String(20))
     telephone = Column(String(20))
     password = Column(String(30))
