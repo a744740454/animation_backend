@@ -20,3 +20,10 @@
     --readme.md         
     --requirements.txt 
 ```
+
+数据库迁移
+```angular2
+
+alembic revision --autogenerate -m "first makemigrate"
+alembic upgrade head
+```

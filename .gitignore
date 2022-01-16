@@ -49,21 +49,6 @@ Thumbs.db
 *.wmv
 
 logs/
-model_template/
-QR_codes/
-mariadb_data/
-deployments/mysqld.cnf
-deployments/docker-compose.yml
-bin/*
-STP_GO/
-STP_GO.zip
-static_service/wasm_canvas/lib.wasm
-build/package/filebeat
-build/package/elasticsearch
-build/package/logstash
-upload_images
-test_outs/
-universal/protocols/inner_protobuf_protocol/stp_common
+venv
 zipped_logs
 sql_back_ups
-animation_web/versions/*
