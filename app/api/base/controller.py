@@ -16,12 +16,21 @@ class BaseView(views.MethodView):
     }
 
     def get(self):
-        pass
+        print(request.args)
+        get_func = self.view_func.get("get", None)
+        if callable(get_func):
+            status, result = get_func(request.args)
+            return response(status, result)
+        else:
+            raise IsNotCallableObj("func is not callable")
 
     def post(self):
-        if isinstance(self.post_protocol, BaseForm):
+        post_protocol_obj = None
+        if self.post_protocol:
+            post_protocol_obj = self.post_protocol()
+        if isinstance(post_protocol_obj, BaseForm):
             request_json = request.json
-            self.post_protocol.validate_for_api()
+            post_protocol_obj.validate_for_api()
             post_func = self.view_func.get("post", None)
             if callable(post_func):
                 status, result = post_func(request_json)

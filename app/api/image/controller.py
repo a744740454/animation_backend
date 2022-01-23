@@ -1,9 +1,8 @@
 from app.api.base.controller import BaseView
 from app.api.user.service import RegisterService
 from common.response import response
-from flask import request
-from protocols.user_protocols.protocol import UserInfoProtocol
-
+from protocols.image_protocol.protocol import ImageDetailProtocol
+from models.image.service import ImageService
 
 class ImageController(BaseView):
     methods = ["GET"]  # 允许的请求方式
@@ -14,8 +13,11 @@ class ImageController(BaseView):
 
 
 class ImageDetailController(BaseView):
-    methods = ["POST"]  # 允许的请求方式
-    protocol = UserInfoProtocol
+    methods = ["GET"]  # 允许的请求方式
+    protocol = ImageDetailProtocol
+    view_func = {
+        "get":ImageService
+    }
 
 
     @classmethod

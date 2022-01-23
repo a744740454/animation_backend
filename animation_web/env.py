@@ -13,10 +13,10 @@ config.set_main_option("sqlalchemy.url", db_url)
 fileConfig(config.config_file_name)
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
-target_metadata = get_metadata()
+target_metadatas = get_metadata()
 
 
-def run_migrations_offline():
+def run_migrations_offline(target_metadata):
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -40,7 +40,7 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online(target_metadata):
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
@@ -61,8 +61,8 @@ def run_migrations_online():
         with context.begin_transaction():
             context.run_migrations()
 
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
+for target_metadata in target_metadatas:
+    if context.is_offline_mode():
+            run_migrations_offline(target_metadata)
+    else:
+        run_migrations_online(target_metadata)

@@ -26,4 +26,6 @@
 
 alembic revision --autogenerate -m "first makemigrate"
 alembic upgrade head
+#修改字段
+op.alter_column('表名',  '字段名', sa.String(length=50), existing_type=mysql.VARCHAR(50))
 ```

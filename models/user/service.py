@@ -13,7 +13,7 @@ class UserModelService:
     @classmethod
     def set_json_response(cls, request_json):
         user = UserInfo()
-        user.name = request_json.get("username", "")
+        user.username = request_json.get("username", "")
         user.password = request_json.get("password", "")
         user.email = request_json.get("email", "")
         user.telephone = request_json.get("telephone", "")
