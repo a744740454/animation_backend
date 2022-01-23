@@ -1,7 +1,7 @@
 from flask.blueprints import Blueprint
 from app.api.user.controller import LoginController, RegisterController
 
-router = Blueprint('api', __name__)
+router = Blueprint('api', __name__, url_prefix='/api')
 
 
 def route_register(app):
