@@ -4,7 +4,7 @@ from middleware.middleware import middleware_register
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,static_folder='./static')
     route_register(app)  # 路由注册
     middleware_register(app)  # 中间件注册
     return app

@@ -1,14 +1,22 @@
 from common.res_code import SUCCESS
-from models.user.service import UserModelService
-from utils.tools import hash_password
+from models.image.service import ImageModel
 
 
-class RegisterService:
+class ImageService:
 
     @classmethod
-    def register(cls, request_json):
-        user_obj = UserModelService.set_json_response(request_json)
-        password = hash_password(request_json.get("password"))
-        request_json["password"] = password
-        UserModelService.insert_user_info(user_obj)
+    def insert_image_info(cls, request_obj):
+        pass
+
+    @classmethod
+    def get_image_detail(cls, request_obj):
+        image_id = request_obj.id.data
+        result = ImageModel.query_image_detail_by_image_id(image_id)
+        return SUCCESS, {}
+
+    @classmethod
+    def get_image_info(cls, request_obj):
+        page = request_obj.page.data
+        page_size = request_obj.page_size.data
+        result = ImageModel.query_image_info(page, page_size)
         return SUCCESS, {}

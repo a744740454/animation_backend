@@ -8,6 +8,7 @@ from common.response import response
 class BaseView(views.MethodView):
     decorators = (valid_token,)
     post_protocol = None
+    get_protocol = None
     view_func = {
         "get": None,
         "post": None,
@@ -15,30 +16,37 @@ class BaseView(views.MethodView):
         "delete": None
     }
 
-    def get(self):
-        print(request.args)
-        get_func = self.view_func.get("get", None)
-        if callable(get_func):
-            status, result = get_func(request.args)
+    def valid_param(self, params, protocol):
+        if not params:
+            return True
+        # 如果有参数，必须要有协议体
+        if not protocol:
+            # 判断get请求是否有对应的协议体
+            raise ProtocolParamError("please sure protocol param is true")
+        else:
+            if callable(protocol):
+                protocol_obj = protocol()  # 实例化对象
+                if not isinstance(protocol_obj, BaseForm):  # 判断对象是否是协议体的对象
+                    raise ProtocolParamError("please sure protocol param is true")
+            else:
+                raise ProtocolParamError("please sure protocol param is true")
+        protocol_obj.validate_for_api()
+        return protocol_obj
+
+    def call_obj_func(self, func, request_obj):
+        if callable(func):
+            status, result = func(request_obj)
             return response(status, result)
         else:
             raise IsNotCallableObj("func is not callable")
 
+    def get(self):
+        protocol_obj = self.valid_param(request.args.to_dict(), self.get_protocol)
+        return self.call_obj_func(self.view_func.get("get"), protocol_obj)
+
     def post(self):
-        post_protocol_obj = None
-        if self.post_protocol:
-            post_protocol_obj = self.post_protocol()
-        if isinstance(post_protocol_obj, BaseForm):
-            request_json = request.json
-            post_protocol_obj.validate_for_api()
-            post_func = self.view_func.get("post", None)
-            if callable(post_func):
-                status, result = post_func(request_json)
-                return response(status, result)
-            else:
-                raise IsNotCallableObj("func is not callable")
-        else:
-            raise ProtocolParamError("please sure protocol param is true")
+        protocol_obj = self.valid_param(request.json, self.post_protocol)
+        return self.call_obj_func(self.view_func.get("post"), protocol_obj)
 
     def put(self):
         pass

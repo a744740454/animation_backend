@@ -1,8 +1,9 @@
 from models.base.service import model_wrapper
 from models.user.User import UserInfo
+from protocols.user_protocols.protocol import UserInfoProtocol
 
 
-class UserModelService:
+class UserModel:
 
     @classmethod
     @model_wrapper
@@ -11,10 +12,10 @@ class UserModelService:
         session.commit()
 
     @classmethod
-    def set_json_response(cls, request_json):
+    def set_json_response(cls, request_obj: UserInfoProtocol):
         user = UserInfo()
-        user.username = request_json.get("username", "")
-        user.password = request_json.get("password", "")
-        user.email = request_json.get("email", "")
-        user.telephone = request_json.get("telephone", "")
+        user.username = request_obj.username.data
+        user.password = request_obj.password.data
+        user.email = request_obj.email.data
+        user.telephone = request_obj.telephone.data
         return user

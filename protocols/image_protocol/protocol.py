@@ -1,8 +1,11 @@
 from wtforms import StringField
 from wtforms.validators import DataRequired, length
-from protocols.base_protocols.protocol import BaseForm
+from protocols.base_protocols.protocol import BaseForm, BaseQueryProtocol
 
 
 class ImageDetailProtocol(BaseForm):
-    image_id = StringField(validators=[DataRequired(message='不允许为空')])
+    id = StringField(validators=[DataRequired(message='不允许为空')])
 
+
+class ImageInfoProtocol(BaseQueryProtocol):
+    pass

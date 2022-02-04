@@ -1,8 +1,7 @@
 from app.api.base.controller import BaseView
-from app.api.user.service import RegisterService
-from common.response import response
-from protocols.image_protocol.protocol import ImageDetailProtocol
-from models.image.service import ImageService
+from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProtocol
+from app.api.image.service import ImageService
+
 
 class ImageController(BaseView):
     methods = ["GET"]  # 允许的请求方式
@@ -13,16 +12,10 @@ class ImageController(BaseView):
 
 
 class ImageDetailController(BaseView):
-    methods = ["GET"]  # 允许的请求方式
-    protocol = ImageDetailProtocol
+    methods = ["GET", "POST"]  # 允许的请求方式
+    post_protocol = ImageInfoProtocol
+    get_protocol = ImageDetailProtocol
     view_func = {
-        "get":ImageService
+        "get": ImageService.get_image_detail,
+        "post": ImageService.get_image_info
     }
-
-
-    @classmethod
-    def register(cls):
-
-        reg_protocol.validate_for_api()
-        status, result = RegisterService.register(request_json)
-        return response(status, result)
