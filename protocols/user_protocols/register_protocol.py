@@ -8,4 +8,3 @@ class RegisterProtocol(BaseForm):
     password = StringField(validators=[DataRequired(message='不允许为空'), length(min=5, max=32)])
     email = StringField(validators=[length(max=32)])
     telephone = StringField(validators=[length(max=32)])
-

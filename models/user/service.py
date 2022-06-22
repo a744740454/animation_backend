@@ -19,8 +19,5 @@ class UserModel:
     @classmethod
     def set_json_response(cls, request_obj: RegisterProtocol):
         user = UserInfo()
-        user.username = request_obj.username.data
-        user.password = request_obj.password.data
-        user.email = request_obj.email.data
-        user.telephone = request_obj.telephone.data
+        user.set_data_from_json(request_obj.to_json())
         return user

@@ -15,6 +15,8 @@ class BaseForm(Form):
             # form errors
             raise ParamValidErr(msg=self.errors)
 
+    def to_json(self):
+        return self.data
 
 class BaseQueryProtocol(BaseForm):
     """

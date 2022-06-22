@@ -19,5 +19,5 @@ def create_session():
     # 初始化数据库连接:
     engine = create_engine(db_url)
     # 创建DBSession类型:
-    session = sessionmaker(bind=engine)
+    session = sessionmaker(bind=engine)()
     return session

@@ -19,7 +19,7 @@ class RegisterService:
         password = hash_password(request_obj.password.data)
 
         # 插入数据库
-        request_obj.password.data = password
+        user_obj.password = password
         UserModel.insert_user_info(user_obj)
         return SUCCESS, {}
 
@@ -42,4 +42,8 @@ class LoginService:
             return ERR_PASSWORD, {}
 
         # 签发token
-        encode_jwt({"user_id": user.id})
+        jwt = encode_jwt({
+            "user_id": user.id,
+            "user_name": user.username
+        })
+        return SUCCESS, {"jwt": jwt}
