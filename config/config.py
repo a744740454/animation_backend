@@ -43,4 +43,3 @@ def dirs_check():
 
 
 dirs_check()
-CONF = get_config()

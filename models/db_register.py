@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from config.config import CONF
+from config import CONF
 
 
 def create_db_url():

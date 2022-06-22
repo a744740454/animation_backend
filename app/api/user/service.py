@@ -1,6 +1,6 @@
 from common.res_code import SUCCESS, USER_NOT_FOUND, ERR_PASSWORD
 from models.user.service import UserModel
-from utils.tools import hash_password
+from utils.tools import hash_password, encode_jwt
 from protocols.user_protocols.register_protocol import RegisterProtocol
 from protocols.user_protocols.login_protocol import LoginProtocol
 
@@ -42,4 +42,4 @@ class LoginService:
             return ERR_PASSWORD, {}
 
         # 签发token
-
+        encode_jwt({"user_id": user.id})
