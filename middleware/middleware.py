@@ -1,6 +1,6 @@
 from flask.wrappers import Response
 from flask.blueprints import Blueprint
-from common.error import ParamValidErr
+from common.error import ParamValidErr,APIError
 from common import response, res_code
 
 middleware = Blueprint('middleware', __name__)
@@ -21,3 +21,8 @@ def cors_handler(response: Response):
     response.headers["Access-Control-Allow-Headers"] = "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE"
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
+
+
+@middleware.app_errorhandler(APIError)
+def param_valid_exception(err):
+    return response.response(err.res_code, {})
