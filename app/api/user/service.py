@@ -49,7 +49,6 @@ class LoginService:
 
         # 签发token
         jwt = encode_jwt({
-            "user_id": user.id,
             "user_name": user.username
-        })
+        }, user_id=user.id)
         return SUCCESS, {"jwt": jwt}

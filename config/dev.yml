@@ -6,5 +6,12 @@ mysql:
   db: animation
   autocommit: true
 
+redis:
+  host: 47.103.25.156
+  port: 6499
+  password: sadnesspineapple
+
+
 jwt:
   key: d41d8cd98f00b204e9800998ecf8427e
+  ex: 15
