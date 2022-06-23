@@ -1,12 +1,11 @@
 from flask import views, request
-from middleware.decorator import valid_token
+from middleware.decorator import login_require
 from protocols.base_protocols.protocol import BaseForm
 from common.error import ProtocolParamError, IsNotCallableObj
 from common.response import response
 
 
 class BaseView(views.MethodView):
-    decorators = (valid_token,)
     post_protocol = None
     get_protocol = None
     view_func = {
@@ -16,13 +15,11 @@ class BaseView(views.MethodView):
         "delete": None
     }
 
-    def valid_param(self, params, protocol):
-        if not params:
-            return True
+    def valid_param(self, protocol):
         # 如果有参数，必须要有协议体
         if not protocol:
             # 判断get请求是否有对应的协议体
-            raise ProtocolParamError("please sure protocol param is true")
+            return
         else:
             if callable(protocol):
                 protocol_obj = protocol()  # 实例化对象
@@ -41,11 +38,11 @@ class BaseView(views.MethodView):
             raise IsNotCallableObj("func is not callable")
 
     def get(self):
-        protocol_obj = self.valid_param(request.args.to_dict(), self.get_protocol)
+        protocol_obj = self.valid_param(self.get_protocol)
         return self.call_obj_func(self.view_func.get("get"), protocol_obj)
 
     def post(self):
-        protocol_obj = self.valid_param(request.json, self.post_protocol)
+        protocol_obj = self.valid_param(self.post_protocol)
         return self.call_obj_func(self.view_func.get("post"), protocol_obj)
 
     def put(self):

@@ -11,36 +11,15 @@ services:
       - "9099:9099"
     volumes:
       - ".:/app"
-    networks:
-      deployments_bito_net:
-        ipv4_address: 72.19.0.10
+
 
   redis:
-    container_name: atp_redis
+    container_name: redis
     restart: always
-    # image: redis:6.2
     build:
       context: ./docker_files/redis/
       dockerfile: Dockerfile
+    volumes:
+      - "/root/myredis/conf:/usr/local/etc/redis"
     ports:
       - "6499:6379"
-    networks:
-      deployments_bito_net:
-        ipv4_address: 72.19.0.100
-
-  mysql:
-    container_name: atp_redis
-    restart: always
-    # image: redis:6.2
-    build:
-      context: ./docker_files/redis/
-      dockerfile: Dockerfile
-    ports:
-      - "6499:6379"
-    networks:
-      deployments_bito_net:
-        ipv4_address: 72.19.0.100
-
-networks:
-  animation_web_net:
-    external: true

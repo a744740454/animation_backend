@@ -5,10 +5,10 @@ from sqlalchemy import Column, String,Integer
 class UserInfo(Base,BaseModel):
     __tablename__ = 'user_info'
 
-    username = Column(String(20))
-    email = Column(String(20))
-    telephone = Column(String(20))
-    password = Column(String(30))
+    username = Column(String(64))
+    email = Column(String(32))
+    telephone = Column(String(16))
+    password = Column(String(32))
 
     def from_json(self, data):
         print(self.__tablename__)

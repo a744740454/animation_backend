@@ -11,6 +11,9 @@ TEMPLATE_PATH = os.path.join(BASE_PATH, "templates")
 
 EXPORT_REPORTS_DIR_NAME = "export_reports"
 EXPORT_REPORTS_PATH = os.path.join(BASE_PATH, EXPORT_REPORTS_DIR_NAME)
+DEFAULT_PAGE = 1
+DEFAULT_PAGE_SIZE = 10
+
 
 
 def get_config():

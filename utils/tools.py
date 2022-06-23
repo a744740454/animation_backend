@@ -1,6 +1,7 @@
 import jwt
 import hashlib
 from config import CONF
+from flask import url_for
 
 
 def hash_password(password):
@@ -20,3 +21,7 @@ def encode_jwt(payload):
 def decode_jwt(jwt):
     payload = jwt.decode(jwt, CONF["jwt"]["key"], algorithms=['HS256'])
     return payload
+
+
+def get_image_url(static_file_name):
+    return url_for("static", filename = static_file_name)

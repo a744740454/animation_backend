@@ -19,3 +19,6 @@ class BaseModel:
             if k in cls_param:
                 setattr(self, k, v)
 
+    def to_json(self,objs):
+        print(self.columns )
+

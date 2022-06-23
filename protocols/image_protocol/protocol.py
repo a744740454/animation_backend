@@ -7,5 +7,9 @@ class ImageDetailProtocol(BaseForm):
     id = StringField(validators=[DataRequired(message='不允许为空')])
 
 
+class BannerProtocol(BaseQueryProtocol):
+    pass
+
+
 class ImageInfoProtocol(BaseQueryProtocol):
     pass
