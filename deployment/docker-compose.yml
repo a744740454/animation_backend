@@ -1,17 +1,6 @@
 version: "3.0"
 
 services:
-  web_server:
-    container_name: atp_server
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "9099:9099"
-    volumes:
-      - ".:/app"
-
 
   redis:
     container_name: redis
@@ -19,7 +8,5 @@ services:
     build:
       context: ./docker_files/redis/
       dockerfile: Dockerfile
-    volumes:
-      - "/root/myredis/conf:/usr/local/etc/redis"
     ports:
       - "6499:6379"
