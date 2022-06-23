@@ -6,7 +6,7 @@ services:
     container_name: redis
     restart: always
     build:
-      context: ./docker_files/redis/
+      context: ./dockerfiles/redis/
       dockerfile: Dockerfile
     ports:
       - "6499:6379"

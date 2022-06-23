@@ -4,7 +4,6 @@ LABEL Author=yiboshi@bitorobotics.ltd
 
 ADD ./sources.list /etc/apt/sources.list
 ADD . /app
-哦
 ENV TZ=Asia/Shanghai
 ENV ATP_env=prod
 
