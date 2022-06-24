@@ -28,4 +28,4 @@ services:
       context: ..
       dockerfile: ./deployment/dockerfiles/web_backend/Dockerfile
     ports:
-      - "12381:5000"
+      - "6500:5000"
