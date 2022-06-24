@@ -13,5 +13,5 @@ RUN apt update -y \
   && pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN pip install -r /app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-
+RUN cd animation_web && mkdir versions
 CMD ["python", "main.py"]
