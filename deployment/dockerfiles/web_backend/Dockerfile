@@ -2,8 +2,8 @@ FROM python:3.8.5-slim-buster
 
 LABEL Author=yiboshi@bitorobotics.ltd
 
-ADD ./sources.list /etc/apt/sources.list
-ADD .. /app
+ADD ./deployment/dockerfiles/web_backend/sources.list /etc/apt/sources.list
+ADD . /app
 ENV TZ=Asia/Shanghai
 ENV ATP_env=prod
 
