@@ -15,10 +15,10 @@ services:
     container_name: mysql
     restart: always
     build:
-      context: .
-      dockerfile: ./dockerfiles/mysql/Dockerfile
+      context: ..
+      dockerfile: ./deployment/dockerfiles/mysql/Dockerfile
     volumes:
-    - ./data /var/lib/mysql
+      - ./data /var/lib/mysql
     ports:
       - "14006:3306"
 
@@ -29,7 +29,5 @@ services:
     build:
       context: ..
       dockerfile: ./deployment/dockerfiles/web_backend/Dockerfile
-    volumes:
-    - . /app
     ports:
       - "6500:5000"

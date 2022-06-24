@@ -1,5 +1,5 @@
 FROM mysql:5.7
 ENV MYSQL_ROOT_PASSWORD=sadnesspineapple
 ENV TZ=Asia/Shanghai
-COPY ./dockerfiles/mysql/init.sql /docker-entrypoint-initdb.d
+COPY ./deployment/dockerfiles/mysql/init.sql /docker-entrypoint-initdb.d
 CMD ["mysqld"]
