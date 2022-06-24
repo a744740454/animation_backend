@@ -3,8 +3,9 @@ from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProt
 from app.api.image.service import ImageService
 from middleware.decorator import login_require
 
+
 class ImageController(BaseView):
-    decorators = (login_require,)
+    # decorators = (login_require,)
     methods = ["GET"]  # 允许的请求方式
     get_protocol = ImageInfoProtocol
     view_func = {

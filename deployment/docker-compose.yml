@@ -10,3 +10,22 @@ services:
       dockerfile: Dockerfile
     ports:
       - "6499:6379"
+
+  mysql:
+    container_name: mysql
+    restart: always
+    build:
+      context: ./dockerfiles/mysql/
+      dockerfile: Dockerfile
+    ports:
+      - "14006:3306"
+
+
+  web_backend:
+    container_name: animation
+    restart: always
+    build:
+      context: ./dockerfiles/redis/
+      dockerfile: Dockerfile
+    ports:
+      - "12381:5000"

@@ -14,6 +14,4 @@ RUN apt update -y \
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN pip install -r /app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-EXPOSE 9099
-
 CMD ["python", "main.py"]

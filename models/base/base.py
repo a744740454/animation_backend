@@ -1,7 +1,8 @@
 import time
+import json
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer
-from protocols.base_protocols.protocol import BaseForm
+
 Base = declarative_base()
 
 
@@ -19,6 +20,9 @@ class BaseModel:
             if k in cls_param:
                 setattr(self, k, v)
 
-    def to_json(self,objs):
-        print(self.columns )
+    def to_json(self):
+        value_json = {}
+        for column in self.__table__.columns:
+            value_json[column.name] = getattr(self, column.name)
 
+        return value_json

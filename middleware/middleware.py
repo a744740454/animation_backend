@@ -16,13 +16,6 @@ def param_valid_exception(err):
     return response.response(res_code.ERR_PARAM, err.msg)
 
 
-@middleware.after_app_request
-def cors_handler(response: Response):
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE"
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    return response
-
-
 @middleware.app_errorhandler(APIError)
 def param_valid_exception(err):
     return response.response(err.res_code, {})

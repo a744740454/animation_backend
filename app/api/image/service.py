@@ -4,6 +4,7 @@ from utils.tools import get_image_url
 from config.config import DEFAULT_PAGE, DEFAULT_PAGE_SIZE
 from middleware.decorator import login_require
 
+
 class ImageService:
 
     @classmethod
@@ -30,17 +31,14 @@ class ImageService:
         return SUCCESS, {}
 
     @classmethod
-    @login_require
+    # @login_require
     def get_image_info(cls, request_obj):
         page = request_obj.page.data or DEFAULT_PAGE
         page_size = request_obj.page_size.data or DEFAULT_PAGE_SIZE
         images = ImageModel.query_image_info(page, page_size)
-        image_infos = []
-        for i in images:
 
-            image_url = get_image_url(i.image_name)
-            image_urls.append(image_url)
-        return SUCCESS, {
-            "image_urls": image_urls
-        }
+        result = []
+        for i in images:
+            result.append(i.to_json())
+        return SUCCESS, result
 
