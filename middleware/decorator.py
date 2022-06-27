@@ -17,7 +17,6 @@ def login_require(func):
         5.设置全局user_id
         """
         token = request.headers.get("Authorization")
-
         # 校验token准确性
         if not token:
             raise APIError(USER_NO_LOGIN)

@@ -11,7 +11,7 @@ class ImageModel:
 
     @classmethod
     def query_image_detail_by_image_id(cls, image_id):
-        result = session.query(ImageInfo).filter_by(id=image_id).first()
+        result = session.query(ImageInfo).filter_by(id == image_id).first()
         return result
 
     @classmethod

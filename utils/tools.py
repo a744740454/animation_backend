@@ -26,8 +26,8 @@ def encode_jwt(payload: dict, user_id: str):
     return encoding_jwt
 
 
-def decode_jwt(jwt):
-    payload = jwt.decode(jwt, CONF["jwt"]["key"], algorithms=['HS256'])
+def decode_jwt(token):
+    payload = jwt.decode(token, CONF["jwt"]["key"], algorithms=['HS256'])
     return payload
 
 

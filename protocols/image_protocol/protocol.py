@@ -13,3 +13,7 @@ class BannerProtocol(BaseQueryProtocol):
 
 class ImageInfoProtocol(BaseQueryProtocol):
     pass
+
+
+class LoveProtocol(BaseForm):
+    id = StringField(validators=[DataRequired(message='不允许为空')])
