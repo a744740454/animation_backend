@@ -38,9 +38,17 @@ class ImageService:
         page_size = request_obj.page_size.data or DEFAULT_PAGE_SIZE
         images = ImageModel.query_image_info(page, page_size)
 
+        # 查询获取到的图片和当前登录用户的关系
+        user_rel_images = UserRelImageModel.query_image_ids_by_user_id(g.user_id)
+        image_ids = [u.image_id for u in user_rel_images]
         result = []
         for i in images:
-            result.append(i.to_json())
+            result_dict = i.to_json()
+            if i.id in image_ids:
+                result_dict["love"] = True
+            else:
+                result_dict["love"] = False
+            result.append(result_dict)
         return SUCCESS, result
 
     @classmethod

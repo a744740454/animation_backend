@@ -12,3 +12,4 @@ class ImageInfo(Base, BaseModel):
     url = Column(String(255), nullable=False, doc="url")
     author_id = Column(String(64), doc="作者id")
     support_num = Column(Integer, default=0, doc="点赞数")
+    views = Column(Integer, default=0, doc="浏览量")
