@@ -21,3 +21,8 @@ class UserModel:
         user = UserInfo()
         user.set_data_from_json(request_obj.to_json())
         return user
+
+    @classmethod
+    def query_user_by_id(cls, user_id):
+        user = session.query(UserInfo).filter(or_(UserInfo.id == user_id)).first()
+        return user

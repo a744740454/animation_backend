@@ -31,6 +31,7 @@ class BaseView(views.MethodView):
         return protocol_obj
 
     def call_obj_func(self, func, request_obj):
+        print(func)
         if callable(func):
             status, result = func(request_obj)
             return response(status, result)

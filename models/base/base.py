@@ -1,8 +1,7 @@
 import time
-import json
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer
-
+from models import session
 Base = declarative_base()
 
 
@@ -26,3 +25,6 @@ class BaseModel:
             value_json[column.name] = getattr(self, column.name)
 
         return value_json
+
+    def save(self):
+        session.commit()

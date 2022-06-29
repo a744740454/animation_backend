@@ -9,6 +9,7 @@ class UserInfo(Base,BaseModel):
     email = Column(String(32))
     telephone = Column(String(16))
     password = Column(String(32))
+    avatar = Column(String(64),default="/static/avatar/default.jpg")
 
     def from_json(self, data):
         print(self.__tablename__)

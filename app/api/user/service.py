@@ -1,9 +1,10 @@
 from common.res_code import SUCCESS, USER_NOT_FOUND, ERR_PASSWORD, USER_EXISTS
 from common.error import APIError
 from models.user.service import UserModel
-from utils.tools import hash_password, encode_jwt
+from utils.tools import hash_password, encode_jwt, get_static_path
 from protocols.user_protocols.register_protocol import RegisterProtocol
 from protocols.user_protocols.login_protocol import LoginProtocol
+from flask import g, request
 
 
 class RegisterService:
@@ -52,3 +53,27 @@ class LoginService:
             "user_name": user.username
         }, user_id=user.id)
         return SUCCESS, {"jwt": jwt}
+
+
+class UserService:
+    @classmethod
+    def get_user_info(cls, request_obj):
+        user = UserModel.query_user_by_id(g.user_id)
+        result = user.to_json()
+        result.pop("password")
+        return SUCCESS, result
+
+    @classmethod
+    def upload_avatar(cls, request_obj):
+        avatar = request.files.get("avatar")
+
+        # 保存图片
+        avatar_path = get_static_path(g.user_id, avatar.mimetype)
+        avatar.save(avatar_path)
+
+        # 更新头像地址
+        user = UserModel.query_user_by_id(g.user_id)
+        user.avatar = avatar_path
+        user.save()
+
+        return SUCCESS, {}

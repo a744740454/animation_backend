@@ -35,3 +35,4 @@ class UserRelImageController(BaseView):
     view_func = {
         "post": ImageService.collect_or_cancel
     }
+
