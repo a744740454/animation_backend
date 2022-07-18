@@ -5,8 +5,62 @@ python 建议版本 3.7
 安装模块
 1.pip install -r requirements.txt
 
-2.项目启动
+2.数据库迁移
+linux 
+    --mkdir animation/versions
+    alembic revision --autogenerate -m "first makemigrate"
+    alembic upgrade head
+
+3.项目启动
 python main.py
+```
+
+项目接口书写
+```text
+写路由
+1.app/router
+    eg:router.add_url_rule("/login", endpoint='login', view_func=LoginController.as_view("login"))
+
+写对应的controller
+eg:
+    class LoginController(BaseView):
+        methods = ["POST"]  # 允许的请求方式
+        post_protocol = LoginProtocol # post请求对应的请求协议，有四种协议get_protocol、post_protocol...每次请求过来会针对对应的协议进行数据校验
+    
+        view_func = {
+            "post": LoginService.login # post请求对应的service层函数
+        }
+
+写协议
+eg:
+    class LoginProtocol(BaseForm):
+        username = StringField(validators=[DataRequired(message='不允许为空'), length(min=5, max=32)])
+        password = StringField(validators=[DataRequired(message='不允许为空'), length(min=5, max=32)])
+
+写service层函数,采用类函数的方式
+eg:
+    @classmethod
+    def login(cls, request_obj: LoginProtocol):
+        account = request_obj.username.data
+        user = UserModel.query_user_by_account(account)
+
+        if not user:
+            raise APIError(USER_NOT_FOUND)
+
+        # 哈希密码
+        password = hash_password(request_obj.password.data)
+
+        # 校验密码是否正确
+        if password != user.password:
+            raise APIError(ERR_PASSWORD)
+
+        # 签发token
+        jwt = encode_jwt({
+            "user_name": user.username
+        }, user_id=user.id)
+        return SUCCESS, {"jwt": jwt}
+
+
 ```
 
 目录结构
