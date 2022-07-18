@@ -1,5 +1,6 @@
 from app.api.base.controller import BaseView
-from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProtocol, BannerProtocol,LoveProtocol
+from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProtocol, BannerProtocol, LoveProtocol, \
+    UserRelImageProtocol
 from app.api.image.service import ImageService
 from middleware.decorator import login_require
 
@@ -28,11 +29,13 @@ class BannerController(BaseView):
         "get": ImageService.get_banner,
     }
 
+
 class UserRelImageController(BaseView):
     decorators = (login_require,)
-    methods = ["POST"]  # 允许的请求方式
+    methods = ["GET","POST"]  # 允许的请求方式
+    get_protocol = UserRelImageProtocol
     post_protocol = LoveProtocol
     view_func = {
+        "get": ImageService.get_user_rel_image_info,
         "post": ImageService.collect_or_cancel
     }
-

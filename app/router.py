@@ -32,4 +32,6 @@ def route_register(app):
     # 获取用户信息
     router.add_url_rule("/user_info", endpoint='user_info', view_func=UserInfoController.as_view("user_info"))
 
+    # 获取用户关联的图片信息
+    router.add_url_rule("/user_rel_image", endpoint='user_rel_image', view_func=UserRelImageController.as_view("user_rel_image"))
     app.register_blueprint(router)

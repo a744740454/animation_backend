@@ -3,7 +3,6 @@ from models.image.service import ImageModel
 from models.user_rel_image.service import UserRelImageModel
 from utils.tools import get_image_url
 from config.config import DEFAULT_PAGE, DEFAULT_PAGE_SIZE
-from middleware.decorator import login_require
 from flask import g
 
 
@@ -39,7 +38,7 @@ class ImageService:
         images = ImageModel.query_image_info(page, page_size)
 
         # 查询获取到的图片和当前登录用户的关系
-        user_rel_images = UserRelImageModel.query_image_ids_by_user_id(g.user_id)
+        user_rel_images = UserRelImageModel.query_infos_by_user_id(g.user_id)
         image_ids = [u.image_id for u in user_rel_images]
         result = []
         for i in images:
@@ -56,7 +55,6 @@ class ImageService:
         """
         收藏或取消收藏
         """
-
         image_rel_user = UserRelImageModel.query_image_rel_user(g.user_id, request_obj.id.data)
 
         # 如果未收藏就收藏
@@ -66,3 +64,18 @@ class ImageService:
             UserRelImageModel.delete_image_rel_user(rel_id=image_rel_user.id)
 
         return SUCCESS, {}
+
+    @classmethod
+    def get_user_rel_image_info(cls, request_obj):
+        page = request_obj.page.data
+        page_size = request_obj.page_size.data
+
+        user_rel_image = UserRelImageModel.query_infos_by_user_id(g.user_id)
+        image_ids = [u.image_id for u in user_rel_image]
+        print(image_ids)
+        # 查询图片信息
+        images = ImageModel.query_image_by_image_ids(image_ids=image_ids, page_size=page_size, page=page)
+        result = [i.to_json() for i in images]
+        return SUCCESS, {
+            "image": result
+        }

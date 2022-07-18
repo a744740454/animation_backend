@@ -61,19 +61,20 @@ class UserService:
         user = UserModel.query_user_by_id(g.user_id)
         result = user.to_json()
         result.pop("password")
+
         return SUCCESS, result
 
     @classmethod
     def upload_avatar(cls, request_obj):
         avatar = request.files.get("avatar")
-
+        print(request.files)
         # 保存图片
         avatar_path = get_static_path(g.user_id, avatar.mimetype)
         avatar.save(avatar_path)
 
         # 更新头像地址
         user = UserModel.query_user_by_id(g.user_id)
-        user.avatar = avatar_path
+        user.avatar = "/" + avatar_path
         user.save()
 
         return SUCCESS, {}

@@ -1,5 +1,4 @@
-from flask import views, request
-from middleware.decorator import login_require
+from flask import views, request,jsonify
 from protocols.base_protocols.protocol import BaseForm
 from common.error import ProtocolParamError, IsNotCallableObj
 from common.response import response
@@ -31,10 +30,9 @@ class BaseView(views.MethodView):
         return protocol_obj
 
     def call_obj_func(self, func, request_obj):
-        print(func)
         if callable(func):
             status, result = func(request_obj)
-            return response(status, result)
+            return jsonify(response(status, result))
         else:
             raise IsNotCallableObj("func is not callable")
 

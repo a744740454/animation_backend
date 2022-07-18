@@ -1,5 +1,15 @@
-目录结构
+项目启动
+```text
+python 建议版本 3.7
 
+安装模块
+1.pip install -r requirements.txt
+
+2.项目启动
+python main.py
+```
+
+目录结构
 ```commandline
 --animation_web
     --animation_web     alembic自动生成的目录，记录迁移文件
@@ -23,7 +33,7 @@
 
 数据库迁移
 ```angular2
-
+在animation_web文件夹下面需要有对应的versions文件夹
 alembic revision --autogenerate -m "first makemigrate"
 alembic upgrade head
 #修改字段

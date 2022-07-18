@@ -23,6 +23,6 @@ class UserRelImageModel:
         session.commit()
 
     @classmethod
-    def query_image_ids_by_user_id(cls, user_id):
+    def query_infos_by_user_id(cls, user_id):
         result = session.query(UserRelImage).filter(UserRelImage.user_id == user_id).all()
         return result
