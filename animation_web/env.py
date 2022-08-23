@@ -8,7 +8,7 @@ from models.init import get_metadata
 from models.db_register import create_db_url
 
 config = context.config
-db_url = 'mysql+pymysql://'+create_db_url()
+db_url = str(create_db_url())
 config.set_main_option("sqlalchemy.url", db_url)
 fileConfig(config.config_file_name)
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

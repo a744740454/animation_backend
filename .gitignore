@@ -54,3 +54,4 @@ zipped_logs
 sql_back_ups
 animation_web/versions/*
 test.py
+mysqldata

@@ -11,14 +11,14 @@ services:
     ports:
       - "6499:6379"
 
-  mysql:
-    container_name: mysql
+  mariadb:
+    container_name: mariadb
     restart: always
     build:
       context: ..
       dockerfile: ./deployment/dockerfiles/mysql/Dockerfile
     volumes:
-      - ../data:/var/lib/mysql
+      - ../mysqldata:/var/lib/mysql
     ports:
       - "14006:3306"
 
@@ -30,6 +30,6 @@ services:
       context: ..
       dockerfile: ./deployment/dockerfiles/web_backend/Dockerfile
     volumes:
-    - .. /app
+    - ..:/app
     ports:
       - "6500:5000"

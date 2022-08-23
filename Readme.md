@@ -5,14 +5,18 @@ python 建议版本 3.7
 安装模块
 1.pip install -r requirements.txt
 
-2.数据库迁移
+2.安装mysql 数据库版本5.7
+
+3.数据库迁移
 linux 
     --mkdir animation/versions
     alembic revision --autogenerate -m "first makemigrate"
     alembic upgrade head
 
-3.项目启动
+4.项目启动
 python main.py
+
+
 ```
 
 项目接口书写

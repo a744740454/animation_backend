@@ -15,7 +15,6 @@ DEFAULT_PAGE = 1
 DEFAULT_PAGE_SIZE = 10
 
 
-
 def get_config():
     """获取配置文件"""
     AIO_SERVER_ENV = os.environ.get('ATP_env', 'dev')

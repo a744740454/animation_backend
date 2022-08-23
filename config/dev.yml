@@ -1,8 +1,8 @@
 mysql:
   host: 127.0.0.1
-  port: 3306
+  port: 14006
   user: root
-  password: ""
+  password: sadnesspineapple
   db: animation
   autocommit: true
 
