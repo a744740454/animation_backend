@@ -15,7 +15,7 @@ class ImageInfoProtocol(BaseQueryProtocol):
     pass
 
 
-class LoveProtocol(BaseForm):
+class CollectProtocol(BaseForm):
     id = StringField(validators=[DataRequired(message='不允许为空')])
 
 

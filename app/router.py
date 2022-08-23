@@ -17,6 +17,10 @@ def route_register(app):
     router.add_url_rule("/image_detail", endpoint='image_detail',
                         view_func=ImageDetailController.as_view("image_detail"))
 
+    # 图片上传
+    router.add_url_rule("/upload_image", endpoint='upload_image',
+                        view_func=ImageDetailController.as_view("image_detail"))
+
     # 首页获取图片列表
     router.add_url_rule("/images", endpoint='images', view_func=ImageController.as_view("images"))
 

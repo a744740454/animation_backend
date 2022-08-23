@@ -1,5 +1,6 @@
 # 引入MinIO包。
 from minio import Minio
+
 # from minio.error import (ResponseError, BucketAlreadyOwnedByYou,
 #                          BucketAlreadyExists)
 
@@ -9,17 +10,19 @@ minioClient = Minio('play.min.io',
                     secret_key='zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG',
                     secure=False)
 
-# 调用make_bucket来创建一个存储桶。
-# try:
-# minioClient.make_bucket("maylogs", location="us-east-1")
-# except BucketAlreadyOwnedByYou as err:
-#        pass
-# except BucketAlreadyExists as err:
-#        pass
-# except ResponseError as err:
-#        raise
-# else:
-#         try:
-minioClient.fput_object('maylogs', 'pumaserver_debug.log', 'test.py')
-        # except ResponseError as err:
-        #        print(err)
+
+class AnimationMinio:
+    def __init__(self, endpoint, access_key, secret_key):
+        self.minio = Minio(endpoint, access_key, secret_key, secure=False)
+
+    def put_file(self, bucket_name, object_name, local_file_path):
+        """
+        文件上传
+        """
+        self.minio.fput_object(bucket_name, object_name, local_file_path)
+
+    def get_file(self, bucket_name, object_name, local_file_path):
+        """
+        文件上传
+        """
+        self.minio.fget_object(bucket_name, object_name, local_file_path)
