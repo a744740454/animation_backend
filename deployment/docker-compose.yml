@@ -1,5 +1,13 @@
 version: "3.0"
 
+networks:
+  animation:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.22.0.0/24"
+          gateway: 172.22.0.1
+
 services:
 
   redis:
@@ -10,6 +18,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "6499:6379"
+    networks:
+      animation:
+        ipv4_address: 172.22.0.2
 
   mariadb:
     container_name: mariadb
@@ -21,6 +32,9 @@ services:
       - ../mysqldata:/var/lib/mysql
     ports:
       - "14006:3306"
+    networks:
+      animation:
+        ipv4_address: 172.22.0.3
 
 
   web_backend:
@@ -33,3 +47,6 @@ services:
     - ..:/app
     ports:
       - "6500:5000"
+    networks:
+      animation:
+        ipv4_address: 172.22.0.4

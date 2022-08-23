@@ -1,14 +1,14 @@
 mysql:
-  host: 47.103.25.156
-  port: 14006
+  host: 172.22.0.3
+  port: 3306
   user: root
   password: sadnesspineapple
   db: animation
   autocommit: true
 
 redis:
-  host: 47.103.25.156
-  port: 6499
+  host: 172.22.0.2
+  port: 6379
   password: sadnesspineapple
 
 
