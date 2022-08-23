@@ -12,7 +12,7 @@ def create_db_url():
     port = CONF.get("mysql").get("port")
     url = make_url('mysql+pymysql://{}:{}@{}:{}/{}'.format(username, password, host, port, db))
     db_url = url.update_query_dict({
-        "charset": "utf8",
+        "charset": "utf8mb4",
         "autocommit": "true"
     })
     print(db_url)
