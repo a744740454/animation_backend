@@ -1,4 +1,4 @@
-from wtforms import StringField
+from wtforms import StringField, FileField
 from wtforms.validators import DataRequired, length
 from protocols.base_protocols.protocol import BaseForm, BaseQueryProtocol
 
@@ -20,4 +20,8 @@ class CollectProtocol(BaseForm):
 
 
 class UserRelImageProtocol(BaseQueryProtocol):
+    pass
+
+
+class UploadImageProtocol(BaseQueryProtocol):
     pass

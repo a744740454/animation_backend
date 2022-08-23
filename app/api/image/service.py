@@ -1,9 +1,15 @@
+# built-in package
+
+# project package
 from common.res_code import SUCCESS
 from models.image.service import ImageModel
 from models.user_rel_image.service import UserRelImageModel
-from utils.tools import get_image_url
+from utils.tools import get_image_url, create_file_name
 from config.config import DEFAULT_PAGE, DEFAULT_PAGE_SIZE
-from flask import g
+from utils.oss import AnimationMinio
+
+# third package
+from flask import g, request
 
 
 class ImageService:
@@ -79,3 +85,13 @@ class ImageService:
         return SUCCESS, {
             "image": result
         }
+
+    @classmethod
+    def upload_image(cls, request_obj):
+        file = request.files.get("upload_image")
+        file_name = create_file_name()
+        minio = AnimationMinio()
+        minio.stream_upload(file_name, file, file.content_length)
+        # minio.upload_file(file_name, file.read())
+
+        return SUCCESS, {}

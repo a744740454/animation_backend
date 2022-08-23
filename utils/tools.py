@@ -1,10 +1,15 @@
+# built-in package
 import jwt
 import time
 import hashlib
 import uuid
+
+# project package
 from config import CONF
-from flask import url_for
 from utils.redis import MyRedis
+
+# third package
+from flask import url_for
 
 
 def hash_password(password):
@@ -40,8 +45,15 @@ def get_token_key(user_id):
     return "{}_token".format(user_id)
 
 
-def get_static_path(user_id,mime_type):
+def get_static_path(user_id, mime_type):
     if mime_type == "image/jpeg":
         return "static/avatar/{}.jpg".format(user_id)
     else:
         return "static/avatar/{}.png".format(user_id)
+
+
+def create_file_name():
+    """
+    对用户上传的文件名进行随机生成
+    """
+    return str(uuid.uuid4())

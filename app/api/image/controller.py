@@ -1,6 +1,6 @@
 from app.api.base.controller import BaseView
 from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProtocol, BannerProtocol, CollectProtocol, \
-    UserRelImageProtocol
+    UserRelImageProtocol,UploadImageProtocol
 from app.api.image.service import ImageService
 from middleware.decorator import login_require
 
@@ -41,10 +41,10 @@ class UserRelImageController(BaseView):
     }
 
 
-class ImageUpload(BaseView):
+class UploadImageController(BaseView):
     decorators = (login_require,)
     methods = ["POST"]  # 允许的请求方式
-    post_protocol = ImageInfoProtocol
+    post_protocol = UploadImageProtocol
     view_func = {
-        "post": ImageService.get_image_info,
+        "post": ImageService.upload_image,
     }

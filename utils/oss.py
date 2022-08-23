@@ -1,28 +1,32 @@
 # 引入MinIO包。
 from minio import Minio
-
-# from minio.error import (ResponseError, BucketAlreadyOwnedByYou,
-#                          BucketAlreadyExists)
-
-# 使用endpoint、access key和secret key来初始化minioClient对象。
-minioClient = Minio('play.min.io',
-                    access_key='Q3AM3UQ867SPQQA43P2F',
-                    secret_key='zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG',
-                    secure=False)
+from config import CONF
 
 
 class AnimationMinio:
-    def __init__(self, endpoint, access_key, secret_key):
+    def __init__(self, endpoint=CONF["minio"]["endpoint"], access_key=CONF["minio"]["access_key"],
+                 secret_key=CONF["minio"]["secret_key"]):
         self.minio = Minio(endpoint, access_key, secret_key, secure=False)
+        if not self._bucket_exists("animation"):
+            self._make_buckets("animation")
 
-    def put_file(self, bucket_name, object_name, local_file_path):
+    def upload_file(self, object_name, local_file_path):
         """
         文件上传
         """
-        self.minio.fput_object(bucket_name, object_name, local_file_path)
+        self.minio.fput_object("animation", object_name, local_file_path)
 
-    def get_file(self, bucket_name, object_name, local_file_path):
+    def download_file(self, object_name, local_file_path):
         """
         文件上传
         """
-        self.minio.fget_object(bucket_name, object_name, local_file_path)
+        self.minio.fget_object("animation", object_name, local_file_path)
+
+    def _make_buckets(self, bucket_name):
+        self.minio.make_bucket(bucket_name)
+
+    def _bucket_exists(self, bucket_name):
+        return self.minio.bucket_exists(bucket_name)
+
+    def stream_upload(self, object_name, data, length=-1):
+        self.minio.put_object("animation", object_name, data, length)
