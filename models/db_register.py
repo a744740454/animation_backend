@@ -22,7 +22,14 @@ def create_db_url():
 def create_session():
     db_url = create_db_url()
     # 初始化数据库连接:
-    engine = create_engine(db_url, pool_size=5, max_overflow=5, pool_pre_ping=True)
+    engine = create_engine(
+        db_url,
+        pool_size=5,
+        max_overflow=5,
+        pool_pre_ping=True,
+        pool_timeout=2,
+        pool_recycle=30,
+    )
 
     # 创建DBSession类型:
     session = sessionmaker(bind=engine)

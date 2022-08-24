@@ -88,10 +88,16 @@ class ImageService:
 
     @classmethod
     def upload_image(cls, request_obj):
+        """
+        上传图片
+        """
         file = request.files.get("upload_image")
         file_name = create_file_name()
+
+        # 通过流的方式上传图片
         minio = AnimationMinio()
         minio.stream_upload(file_name, file, file.content_length)
-        # minio.upload_file(file_name, file.read())
+
+        #·
 
         return SUCCESS, {}
