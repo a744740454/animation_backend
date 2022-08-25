@@ -15,24 +15,26 @@ class ImageController(BaseView):
 
 
 class ImageDetailController(BaseView):
-    methods = ["POST"]  # 允许的请求方式
+    methods = ["GET"]  # 允许的请求方式
+    decorators = (login_require,)
     get_protocol = ImageDetailProtocol
     view_func = {
-        "post": ImageService.get_image_info
+        "get": ImageService.get_image_detail
     }
 
 
 class BannerController(BaseView):
     methods = ["GET"]  # 允许的请求方式
     get_protocol = BannerProtocol
+    decorators = (login_require,)
     view_func = {
         "get": ImageService.get_banner,
     }
 
 
 class UserRelImageController(BaseView):
-    decorators = (login_require,)
     methods = ["GET", "POST"]  # 允许的请求方式
+    decorators = (login_require,)
     get_protocol = UserRelImageProtocol
     post_protocol = CollectProtocol
     view_func = {
@@ -42,8 +44,8 @@ class UserRelImageController(BaseView):
 
 
 class UploadImageController(BaseView):
-    decorators = (login_require,)
     methods = ["POST"]  # 允许的请求方式
+    decorators = (login_require,)
     post_protocol = UploadImageProtocol
     view_func = {
         "post": ImageService.upload_image,

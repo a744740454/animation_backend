@@ -1,5 +1,5 @@
 from flask.blueprints import Blueprint
-from app.api.user.controller import LoginController, RegisterController, UserInfoController, AvatarController
+from app.api.user.controller import LoginController, RegisterController, UserInfoController, AvatarController,AuthorController
 from app.api.image.controller import ImageDetailController, BannerController, ImageController, UserRelImageController, \
     UploadImageController
 
@@ -19,6 +19,9 @@ def route_register(app):
     # 获取用户关联的图片信息
     router.add_url_rule("/user_rel_image", endpoint='user_rel_image',
                         view_func=UserRelImageController.as_view("user_rel_image"))
+
+    # 获取作者信息
+    router.add_url_rule("/author_info", endpoint='author_info', view_func=AuthorController.as_view("author_info"))
 
     # 图片模块
     # 获得轮播图列表

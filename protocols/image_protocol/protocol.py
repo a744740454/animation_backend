@@ -4,7 +4,7 @@ from protocols.base_protocols.protocol import BaseForm, BaseQueryProtocol
 
 
 class ImageDetailProtocol(BaseForm):
-    id = StringField(validators=[DataRequired(message='不允许为空')])
+    image_id = StringField(validators=[DataRequired(message='不允许为空')])
 
 
 class BannerProtocol(BaseQueryProtocol):

@@ -2,7 +2,7 @@ from app.api.base.controller import BaseView
 from app.api.user.service import RegisterService, LoginService, UserService
 from protocols.user_protocols.register_protocol import RegisterProtocol
 from protocols.user_protocols.login_protocol import LoginProtocol
-from protocols.user_protocols.user_protocol import UserInfoProtocol
+from protocols.user_protocols.user_protocol import UserInfoProtocol, AuthorProtocol
 from middleware.decorator import login_require
 
 
@@ -26,6 +26,8 @@ class RegisterController(BaseView):
 class UserInfoController(BaseView):
     decorators = (login_require,)
     methods = ["GET"]
+    post_protocol = RegisterProtocol
+
     view_func = {
         "get": UserService.get_user_info
     }
@@ -36,4 +38,14 @@ class AvatarController(BaseView):
     methods = ["POST"]
     view_func = {
         "post": UserService.upload_avatar
+    }
+
+
+class AuthorController(BaseView):
+    decorators = (login_require,)
+    methods = ["GET"]
+    get_protocol = AuthorProtocol
+
+    view_func = {
+        "get": UserService.get_author_info
     }

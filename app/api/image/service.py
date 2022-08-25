@@ -33,9 +33,13 @@ class ImageService:
 
     @classmethod
     def get_image_detail(cls, request_obj):
-        image_id = request_obj.id.data
-        result = ImageModel.query_image_detail_by_image_id(image_id)
-        return SUCCESS, {}
+        image_id = request_obj.image_id.data
+        image = ImageModel.query_image_detail_by_image_id(image_id)
+        response = {}
+        if image:
+            response = image.to_json()
+        print(response)
+        return SUCCESS, response
 
     @classmethod
     def get_image_info(cls, request_obj):
