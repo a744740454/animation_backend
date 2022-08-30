@@ -17,7 +17,8 @@ def init():
     for i in range(1, 11):
         image_info = ImageInfo()
         image_info.image_name = "{}.jpg".format(i)
-        image_info.url = "/static/{}.jpg".format(i)
+        image_info.original_url = "/static/{}.jpg".format(i)
+        image_info.thumbnail_url = "/static/{}.jpg".format(i)
         # session.
         session.add(image_info)
     session.commit()

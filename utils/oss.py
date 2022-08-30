@@ -14,7 +14,8 @@ class AnimationMinio:
         """
         文件上传
         """
-        self.minio.fput_object("animation", object_name, local_file_path)
+        content_type = "image/jpeg"
+        self.minio.fput_object("animation", object_name, local_file_path,content_type=content_type)
 
     def download_file(self, object_name, local_file_path):
         """
@@ -30,3 +31,8 @@ class AnimationMinio:
 
     def stream_upload(self, object_name, data, length=-1):
         self.minio.put_object("animation", object_name, data, length)
+
+
+if __name__ == '__main__':
+    a = AnimationMinio()
+    a.upload_file("image/test.jpg", "1.jpg")

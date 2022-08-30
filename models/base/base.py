@@ -1,12 +1,15 @@
 import time
+import uuid
+
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, String
 from models import session
+
 Base = declarative_base()
 
 
 class BaseModel:
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(String(128), default=uuid.uuid4(), primary_key=True)
     create_time = Column(Integer, default=int(time.time()))
     modify_time = Column(Integer)
 

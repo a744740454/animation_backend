@@ -9,7 +9,8 @@ class ImageInfo(Base, BaseModel):
 
     image_name = Column(String(64), default=uuid.uuid4(), doc="图片名称")
     image_desc = Column(Text(), default='', doc="图片描述")
-    url = Column(String(255), nullable=False, doc="url")
+    original_url = Column(String(255), nullable=False, doc="原生图片url")
+    thumbnail_url = Column(String(255), nullable=False, doc="缩略图url")
     author_id = Column(String(64), doc="作者id")
     support_num = Column(Integer, default=0, doc="点赞数")
     views = Column(Integer, default=0, doc="浏览量")
