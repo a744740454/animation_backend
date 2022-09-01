@@ -1,12 +1,18 @@
+# built-in package
+
+# project package
 from .user_rel_image import UserRelImage
 from models import session
 
+
+# third package
 
 class UserRelImageModel:
 
     @classmethod
     def query_image_rel_user(cls, user_id, image_id):
-        result = session.query(UserRelImage).filter(UserRelImage.user_id == user_id, UserRelImage.image_id == image_id).first()
+        result = session.query(UserRelImage).filter(UserRelImage.user_id == user_id,
+                                                    UserRelImage.image_id == image_id).first()
         return result
 
     @classmethod

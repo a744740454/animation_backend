@@ -1,7 +1,7 @@
 import os
 from models import session
 from models.image.Image import ImageInfo
-
+from utils.tools import create_id
 
 def init():
     # 判断animation_web下面有没有version文件夹
@@ -16,6 +16,7 @@ def init():
     # 数据库插入数据
     for i in range(1, 11):
         image_info = ImageInfo()
+        image_info.id = create_id()
         image_info.image_name = "{}.jpg".format(i)
         image_info.original_url = "/static/{}.jpg".format(i)
         image_info.thumbnail_url = "/static/{}.jpg".format(i)

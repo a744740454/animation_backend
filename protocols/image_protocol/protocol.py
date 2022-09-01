@@ -1,5 +1,5 @@
-from wtforms import StringField, FileField
-from wtforms.validators import DataRequired, length
+from wtforms import StringField,FieldList
+from wtforms.validators import DataRequired
 from protocols.base_protocols.protocol import BaseForm, BaseQueryProtocol
 
 
@@ -24,4 +24,7 @@ class UserRelImageProtocol(BaseQueryProtocol):
 
 
 class UploadImageProtocol(BaseQueryProtocol):
-    pass
+    title = StringField()
+    desc = StringField()
+    author_name = StringField()
+    tags = StringField()

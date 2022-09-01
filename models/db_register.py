@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.engine import URL, make_url
-from sqlalchemy.orm import sessionmaker,scoped_session
+from sqlalchemy.engine import make_url
+from sqlalchemy.orm import sessionmaker, scoped_session
 from config import CONF
 
 
@@ -15,7 +15,6 @@ def create_db_url():
         "charset": "utf8mb4",
         "autocommit": "true"
     })
-    print(db_url)
     return db_url
 
 

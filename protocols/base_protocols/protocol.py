@@ -7,7 +7,9 @@ class BaseForm(Form):
     def __init__(self):
         data = request.get_json(silent=True)
         args = request.args.to_dict()
-        super(BaseForm, self).__init__(data=data, **args)
+        form = request.form.to_dict()
+        print(request.form.to_dict())
+        super(BaseForm, self).__init__(data=data, **args, **form)
 
     def validate_for_api(self):
         valid = super(BaseForm, self).validate()
@@ -17,6 +19,7 @@ class BaseForm(Form):
 
     def to_json(self):
         return self.data
+
 
 class BaseQueryProtocol(BaseForm):
     """

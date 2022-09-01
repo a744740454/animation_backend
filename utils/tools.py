@@ -3,6 +3,7 @@ import jwt
 import time
 import hashlib
 import uuid
+import random
 
 # project package
 from config import CONF
@@ -57,3 +58,7 @@ def create_file_name():
     对用户上传的文件名进行随机生成
     """
     return str(uuid.uuid4())
+
+
+def create_id():
+    return uuid.uuid5(uuid.NAMESPACE_DNS, str(uuid.uuid1()) + str(random.random()))
