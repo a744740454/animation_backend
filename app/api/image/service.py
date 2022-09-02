@@ -29,7 +29,7 @@ class ImageService:
         images = ImageModel.query_image_info(page, page_size)
         image_urls = []
         for i in images:
-            image_url = get_image_url(i.image_name)
+            image_url = get_image_url(i.original_url)
             image_urls.append(image_url)
         return SUCCESS, {
             "image_urls": image_urls
@@ -41,8 +41,10 @@ class ImageService:
         image = ImageModel.query_image_detail_by_image_id(image_id)
         response = {}
         if image:
+            image.original_url = get_image_url(image.original_url)
+            image.thumbnail_url = get_image_url(image.thumbnail_url)
             response = image.to_json()
-        print(response)
+
         return SUCCESS, response
 
     @classmethod
@@ -51,11 +53,13 @@ class ImageService:
         page_size = request_obj.page_size.data or DEFAULT_PAGE_SIZE
         images = ImageModel.query_image_info(page, page_size)
 
-        # 查询获取到的图片和当前登录用户的关系
+        # 判断图片是否被用户收藏
         user_rel_images = UserRelImageModel.query_infos_by_user_id(g.user_id)
         image_ids = [u.image_id for u in user_rel_images]
         result = []
         for i in images:
+            i.original_url = get_image_url(i.original_url)
+            i.thumbnail_url = get_image_url(i.thumbnail_url)
             result_dict = i.to_json()
             if i.id in image_ids:
                 result_dict["love"] = True
@@ -81,14 +85,19 @@ class ImageService:
 
     @classmethod
     def get_user_rel_image_info(cls, request_obj):
+        """
+        获取用户收藏的图片信息
+        """
         page = request_obj.page.data
         page_size = request_obj.page_size.data
 
         user_rel_image = UserRelImageModel.query_infos_by_user_id(g.user_id)
         image_ids = [u.image_id for u in user_rel_image]
-        print(image_ids)
         # 查询图片信息
         images = ImageModel.query_image_by_image_ids(image_ids=image_ids, page_size=page_size, page=page)
+        for i in images:
+            i.original_url = get_image_url(i.original_url)
+            i.thumbnail_url = get_image_url(i.thumbnail_url)
         result = [i.to_json() for i in images]
         return SUCCESS, {
             "image": result
@@ -101,11 +110,14 @@ class ImageService:
         """
         original_img = request.files.get("original_img")
         thumbnail_image = request.files.get("thumbnail_img")
+        content_type = original_img.headers["Content-Type"]
         file_name = create_file_name()
         # 通过流的方式上传图片
         minio = AnimationMinio()
-        minio.stream_upload("original/" + file_name, original_img, original_img.content_length)
-        minio.stream_upload("thumbnail/" + file_name, thumbnail_image, thumbnail_image.content_length)
+        minio.stream_upload("original/" + file_name, original_img,
+                            content_type=content_type)
+        minio.stream_upload("thumbnail/" + file_name, thumbnail_image,
+                            content_type=content_type)
 
         # 获取作者id
         if not request_obj.author_name.data:

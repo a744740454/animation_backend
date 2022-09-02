@@ -17,6 +17,7 @@ jwt:
   ex: 15
 
 minio:
+  protocol: http
   endpoint: oss.qunqing.cc:9001
   access_key: ANIMATION
   secret_key: Animation-114514

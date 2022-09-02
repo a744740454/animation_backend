@@ -1,4 +1,5 @@
 # 引入MinIO包。
+import io
 from minio import Minio
 from config import CONF
 
@@ -15,7 +16,7 @@ class AnimationMinio:
         文件上传
         """
         content_type = "image/jpeg"
-        self.minio.fput_object("animation", object_name, local_file_path,content_type=content_type)
+        self.minio.fput_object("animation", object_name, local_file_path, content_type=content_type)
 
     def download_file(self, object_name, local_file_path):
         """
@@ -29,8 +30,11 @@ class AnimationMinio:
     def _bucket_exists(self, bucket_name):
         return self.minio.bucket_exists(bucket_name)
 
-    def stream_upload(self, object_name, data, length=-1):
-        self.minio.put_object("animation", object_name, data, length)
+    def stream_upload(self, object_name, data, content_type="image/jpeg"):
+        data = data.read()
+        file_length = len(data)
+        file = io.BytesIO(data)
+        self.minio.put_object("animation", object_name, file, file_length, content_type)
 
 
 if __name__ == '__main__':

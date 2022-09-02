@@ -38,8 +38,11 @@ def decode_jwt(token):
     return payload
 
 
-def get_image_url(static_file_name):
-    return url_for("static", filename=static_file_name)
+def get_image_url(url):
+    oss_protocol = CONF["minio"]["protocol"]
+    oss_endpoint = CONF["minio"]["endpoint"]
+
+    return oss_protocol + "://" + oss_endpoint + "/" + "animation" + "/" + url
 
 
 def get_token_key(user_id):
@@ -57,7 +60,7 @@ def create_file_name():
     """
     对用户上传的文件名进行随机生成
     """
-    return str(uuid.uuid4())
+    return str(uuid.uuid4()) + ".jpg"
 
 
 def create_id():
