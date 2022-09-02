@@ -1,7 +1,7 @@
 from flask.blueprints import Blueprint
 from app.api.user.controller import LoginController, RegisterController, UserInfoController, AvatarController,AuthorController
 from app.api.image.controller import ImageDetailController, BannerController, ImageController, UserRelImageController, \
-    UploadImageController
+    UploadImageController,TagsController
 
 router = Blueprint('api', __name__, url_prefix='/api/v1')
 
@@ -37,5 +37,8 @@ def route_register(app):
     # 收藏或取消收藏
     router.add_url_rule("/collect_or_cancel", endpoint='collect_or_cancel',
                         view_func=UserRelImageController.as_view("collect_or_cancel"))
+    # 获取标签
+    router.add_url_rule("/tags", endpoint='tags',
+                        view_func=TagsController.as_view("tags"))
 
     app.register_blueprint(router)

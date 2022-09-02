@@ -163,3 +163,11 @@ class ImageService:
         AuthorRelImageModel.add_author_rel_image(author_id, image_id)
 
         return SUCCESS, {}
+
+    @classmethod
+    def get_tags(cls, request_obj):
+        result = TagModel.query_tags(request_obj.page.data, request_obj.page_size.data)
+        res = [r.to_json() for r in result]
+        return SUCCESS, {
+            "tags": res
+        }

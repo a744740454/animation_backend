@@ -1,6 +1,6 @@
 from app.api.base.controller import BaseView
 from protocols.image_protocol.protocol import ImageDetailProtocol, ImageInfoProtocol, BannerProtocol, CollectProtocol, \
-    UserRelImageProtocol,UploadImageProtocol
+    UserRelImageProtocol,UploadImageProtocol,GetTagsProtocol
 from app.api.image.service import ImageService
 from middleware.decorator import login_require
 
@@ -49,4 +49,13 @@ class UploadImageController(BaseView):
     post_protocol = UploadImageProtocol
     view_func = {
         "post": ImageService.upload_image,
+    }
+
+
+class TagsController(BaseView):
+    methods = ["GET"]  # 允许的请求方式
+    decorators = (login_require,)
+    get_protocol = GetTagsProtocol
+    view_func = {
+        "get": ImageService.get_tags,
     }

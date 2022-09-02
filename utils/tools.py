@@ -39,10 +39,10 @@ def decode_jwt(token):
 
 
 def get_image_url(url):
-    oss_protocol = CONF["minio"]["protocol"]
+    protocol = CONF["minio"]["protocol"]
     oss_endpoint = CONF["minio"]["endpoint"]
 
-    return oss_protocol + "://" + oss_endpoint + "/" + "animation" + "/" + url
+    return protocol + "://" + oss_endpoint + "/" + "animation" + "/" + url
 
 
 def get_token_key(user_id):

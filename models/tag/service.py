@@ -1,9 +1,10 @@
 from .tag import Tag
 from models import session
 from utils.tools import create_id
+from models.base.service import BaseModel
 
 
-class TagModel:
+class TagModel(BaseModel):
     @classmethod
     def query_tag_by_id(cls, tag_id):
         tag = session.query(Tag).filter(
@@ -38,3 +39,7 @@ class TagModel:
             Tag.name.in_(tag_name)
         ).all()
         return tags
+
+    @classmethod
+    def query_tags(cls, page, page_size):
+        return cls()._query(Tag, page, page_size).all()

@@ -23,8 +23,12 @@ class UserRelImageProtocol(BaseQueryProtocol):
     pass
 
 
-class UploadImageProtocol(BaseQueryProtocol):
+class UploadImageProtocol(BaseForm):
     title = StringField()
     desc = StringField()
     author_name = StringField()
     tags = StringField()
+
+
+class GetTagsProtocol(BaseQueryProtocol):
+    pass
