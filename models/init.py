@@ -6,6 +6,7 @@ from models.user_rel_image.user_rel_image import UserRelImage
 from models.tag_rel_image.tag_rel_image import TagRelImage
 from models.author_rel_image.author_rel_image import AuthorRelImage
 
+
 def get_metadata():
     metadata = [
         UserInfo.metadata,

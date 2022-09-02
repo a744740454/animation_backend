@@ -23,11 +23,11 @@ def create_session():
     # 初始化数据库连接:
     engine = create_engine(
         db_url,
-        pool_size=5,
-        max_overflow=5,
+        pool_size=30,
+        max_overflow=10,
         pool_pre_ping=True,
         pool_timeout=2,
-        pool_recycle=30,
+        pool_recycle=10,
     )
 
     # 创建DBSession类型:
