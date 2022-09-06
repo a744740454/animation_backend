@@ -26,7 +26,6 @@ class ImageDetailController(BaseView):
 class BannerController(BaseView):
     methods = ["GET"]  # 允许的请求方式
     get_protocol = BannerProtocol
-    decorators = (login_require,)
     view_func = {
         "get": ImageService.get_banner,
     }

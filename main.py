@@ -1,4 +1,9 @@
+# built-in package
+
+# project package
 from application import create_app
+
+# third package
 
 app = create_app()
 

@@ -1,5 +1,11 @@
-from redis import Redis
+# built-in package
+
+# project package
 from config import CONF
+
+
+# third package
+from redis import Redis
 
 
 class MyRedis():

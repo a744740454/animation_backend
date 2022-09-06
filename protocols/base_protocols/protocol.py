@@ -1,6 +1,11 @@
+# built-in package
+
+# project package
+from common.error import ParamValidErr
+
+# third package
 from flask import request
 from wtforms import Form, IntegerField
-from common.error import ParamValidErr
 
 
 class BaseForm(Form):

@@ -1,6 +1,12 @@
+# built-in package
+
+# project package
 from .tag_rel_image import TagRelImage
 from models import session
 from utils.tools import create_id
+
+
+# third package
 from flask import g
 
 

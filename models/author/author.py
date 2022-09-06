@@ -1,6 +1,10 @@
-import uuid
+# built-in package
+
+# project package
 from models.base.base import Base, BaseModel
-from sqlalchemy import Column, String, Integer, Text, UniqueConstraint
+
+# third package
+from sqlalchemy import Column, String
 
 
 class AuthorInfo(Base, BaseModel):

@@ -10,7 +10,6 @@ from config import CONF
 from utils.redis import MyRedis
 
 # third package
-from flask import url_for
 
 
 def hash_password(password):

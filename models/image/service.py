@@ -1,8 +1,13 @@
+# built-in package
+
+# project package
 from .Image import ImageInfo
-from models.init import UserRelImage
 from models import session
 from utils.tools import create_id
-from flask import g
+
+
+# third package
+
 
 
 class ImageModel:

@@ -1,9 +1,13 @@
+# built-in package
 import time
 import uuid
 import random
+# project package
+from models import session
+
+# third package
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
-from models import session
 
 Base = declarative_base()
 

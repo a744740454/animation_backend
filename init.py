@@ -1,7 +1,14 @@
+# built-in package
 import os
+
+# project package
 from models import session
 from models.image.Image import ImageInfo
 from utils.tools import create_id
+
+
+# third package
+
 
 def init():
     # 判断animation_web下面有没有version文件夹

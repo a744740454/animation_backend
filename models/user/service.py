@@ -1,7 +1,14 @@
+# built-in package
+
+# project package
 from models import session
 from models.user.User import UserInfo
 from protocols.user_protocols.register_protocol import RegisterProtocol
+
+
+# third package
 from sqlalchemy import or_
+
 
 
 class UserModel:

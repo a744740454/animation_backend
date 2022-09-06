@@ -1,7 +1,11 @@
-# 引入MinIO包。
+# built-in package
 import io
-from minio import Minio
+
+# project package
 from config import CONF
+
+# third package
+from minio import Minio
 
 
 class AnimationMinio:

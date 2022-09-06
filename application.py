@@ -1,6 +1,12 @@
-from flask import Flask
+# built-in package
+
+
+# project package
 from app.router import route_register
 from middleware.middleware import middleware_register
+
+# third package
+from flask import Flask
 from flask_cors import CORS
 
 

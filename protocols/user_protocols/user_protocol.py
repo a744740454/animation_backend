@@ -1,6 +1,11 @@
-from wtforms import StringField
-from wtforms.validators import DataRequired, length
+# built-in package
+
+# project package
 from protocols.base_protocols.protocol import BaseForm
+
+# third package
+from wtforms import StringField
+from wtforms.validators import DataRequired
 
 
 class UserInfoProtocol(BaseForm):

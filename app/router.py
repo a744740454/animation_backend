@@ -1,7 +1,15 @@
-from flask.blueprints import Blueprint
-from app.api.user.controller import LoginController, RegisterController, UserInfoController, AvatarController,AuthorController
+# built-in package
+
+
+# project package
+
+from app.api.user.controller import LoginController, RegisterController, UserInfoController, AvatarController, \
+    AuthorController
 from app.api.image.controller import ImageDetailController, BannerController, ImageController, UserRelImageController, \
-    UploadImageController,TagsController
+    UploadImageController, TagsController
+
+# third package
+from flask.blueprints import Blueprint
 
 router = Blueprint('api', __name__, url_prefix='/api/v1')
 

@@ -1,7 +1,13 @@
+# built-in package
+
+# project package
 from .tag import Tag
 from models import session
 from utils.tools import create_id
 from models.base.service import BaseModel
+
+
+# third package
 
 
 class TagModel(BaseModel):

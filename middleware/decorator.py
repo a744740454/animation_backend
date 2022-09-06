@@ -1,9 +1,14 @@
+# built-in package
 import time
+
+# project package
 from utils.tools import decode_jwt, encode_jwt, get_token_key
 from utils.redis import MyRedis
-from flask import request, g
 from common.error import APIError
 from common.res_code import USER_NO_LOGIN, TOKEN_EXPIRED
+
+# third package
+from flask import request, g
 
 
 def login_require(func):
@@ -48,4 +53,5 @@ def login_require(func):
         result = func(*args, **kwargs)
 
         return result
+
     return inner
