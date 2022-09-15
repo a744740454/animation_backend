@@ -46,7 +46,7 @@ services:
     volumes:
     - ..:/app
     ports:
-      - "6500:5000"
+      - "6500:6500"
     networks:
       animation:
         ipv4_address: 172.22.0.4
