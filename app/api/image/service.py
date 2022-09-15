@@ -108,6 +108,7 @@ class ImageService:
         """
         上传图片
         """
+        print(f"文件上传{request.files}")
         original_img = request.files.get("original_img")
         thumbnail_image = request.files.get("thumbnail_img")
         content_type = original_img.headers["Content-Type"]
