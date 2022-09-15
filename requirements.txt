@@ -29,3 +29,4 @@ wrapt==1.14.1
 WTForms==3.0.0
 WTForms-JSON==0.3.3
 zipp==3.6.0
+minio==7.1.11
