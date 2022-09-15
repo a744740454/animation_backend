@@ -29,6 +29,7 @@ class RegisterService:
 
         # 插入数据库
         user_obj.password = password
+
         UserModel.insert_user_info(user_obj)
         return SUCCESS, {}
 

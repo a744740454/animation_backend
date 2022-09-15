@@ -4,7 +4,7 @@
 from models import session
 from models.user.User import UserInfo
 from protocols.user_protocols.register_protocol import RegisterProtocol
-
+from utils.tools import create_id
 
 # third package
 from sqlalchemy import or_
@@ -28,8 +28,10 @@ class UserModel:
     @classmethod
     def set_json_response(cls, request_obj: RegisterProtocol):
         user = UserInfo()
+        user.id = create_id()
         user.set_data_from_json(request_obj.to_json())
         user.avatar = "/static/avatar/default.jpg"
+
         return user
 
     @classmethod
