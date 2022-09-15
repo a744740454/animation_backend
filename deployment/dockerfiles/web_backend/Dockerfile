@@ -9,7 +9,10 @@ ENV ATP_env=prod
 
 WORKDIR /app
 
-RUN apt update -y
+RUN RUN sed -i "s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g" /etc/apt/sources.list \
+    && rm -Rf /var/lib/apt/lists/* \
+    && apt-get update \
+    && pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN pip install -r /app/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 CMD ["python", "main.py"]
