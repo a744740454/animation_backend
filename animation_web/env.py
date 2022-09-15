@@ -61,8 +61,9 @@ def run_migrations_online(target_metadata):
         with context.begin_transaction():
             context.run_migrations()
 
+
 for target_metadata in target_metadatas:
     if context.is_offline_mode():
-            run_migrations_offline(target_metadata)
+        run_migrations_offline(target_metadata)
     else:
         run_migrations_online(target_metadata)
