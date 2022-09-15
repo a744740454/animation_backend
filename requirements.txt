@@ -1,5 +1,6 @@
 alembic==1.7.5
 async-timeout==4.0.2
+certifi==2022.6.15
 click==8.0.3
 colorama==0.4.5
 Deprecated==1.2.13
@@ -15,6 +16,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 Mako==1.1.6
 MarkupSafe==2.0.1
+minio==7.1.11
 packaging==21.3
 PyJWT==2.4.0
 PyMySQL==1.0.2
@@ -23,10 +25,10 @@ PyYAML==6.0
 redis==4.3.3
 six==1.16.0
 SQLAlchemy==1.4.27
-typing-extensions==4.2.0
+typing_extensions==4.2.0
+urllib3==1.26.12
 Werkzeug==2.0.2
 wrapt==1.14.1
 WTForms==3.0.0
 WTForms-JSON==0.3.3
 zipp==3.6.0
-minio==7.1.11
