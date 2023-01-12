@@ -4,6 +4,7 @@
 from application import create_app
 
 # third package
+from flask import make_response
 
 app = create_app()
 

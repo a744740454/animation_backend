@@ -1,7 +1,6 @@
 from common.res_code import SUCCESS, USER_NOT_FOUND, ERR_PASSWORD, USER_EXISTS,AUTHOR_NOT_FOUND
 from common.error import APIError
 from models.user.service import UserModel
-from models.author.service import AuthorModel
 from models.image.service import ImageModel
 from utils.tools import hash_password, encode_jwt, get_static_path
 from protocols.user_protocols.register_protocol import RegisterProtocol
@@ -87,7 +86,7 @@ class UserService:
         """
         查询作者的基本信息以及相关的作品
         """
-        author = AuthorModel.query_author_by_id(request_obj.author_id.value)
+        author = UserModel.query_user_by_id(request_obj.author_id.value)
         if not author:
             return AUTHOR_NOT_FOUND, {}
 

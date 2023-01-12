@@ -6,6 +6,8 @@ from config import CONF
 
 # third package
 from minio import Minio
+from qcloud_cos import CosConfig
+from qcloud_cos import CosS3Client
 
 
 class AnimationMinio:
@@ -41,6 +43,29 @@ class AnimationMinio:
         self.minio.put_object("animation", object_name, file, file_length, content_type)
 
 
+class TencentOss:
+    def __init__(self, secret_id=CONF["tencent_oss"]["secret_id"], secret_key=CONF["tencent_oss"]["secret_key"],
+                 region=CONF["tencent_oss"]["region"]):
+        config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key)
+        self.client = CosS3Client(config)
+        self.bucket = CONF["tencent_oss"]["bucket"]
+
+    def stream_upload(self, stream, key):
+        self.client.put_object(
+            Bucket=self.bucket,
+            Body=stream,
+            Key=key
+        )
+
+    def create_bucket(self):
+        self.client.create_bucket(
+            Bucket='animation-1304688700'
+        )
+
+
 if __name__ == '__main__':
-    a = AnimationMinio()
-    a.upload_file("image/test.jpg", "1.jpg")
+    a = TencentOss()
+    # a.create_bucket()
+    # with open("redis.py", mode='rb+',) as f:
+    #     a.upload(f.read(), "test")
+    # a.upload_file("image/test.jpg", "1.jpg")

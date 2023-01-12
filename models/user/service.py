@@ -10,7 +10,6 @@ from utils.tools import create_id
 from sqlalchemy import or_
 
 
-
 class UserModel:
 
     @classmethod
@@ -36,6 +35,6 @@ class UserModel:
 
     @classmethod
     def query_user_by_id(cls, user_id):
-        user = session.query(UserInfo).filter(or_(UserInfo.id == user_id)).first()
+        user = session.query(UserInfo).filter(UserInfo.id == user_id).first()
         session.close()
         return user

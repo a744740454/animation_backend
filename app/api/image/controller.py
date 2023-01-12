@@ -10,7 +10,7 @@ class ImageController(BaseView):
     methods = ["GET"]  # 允许的请求方式
     get_protocol = ImageInfoProtocol
     view_func = {
-        "get": ImageService.get_image_info,
+        "get": ImageService.get_images_info,
     }
 
 

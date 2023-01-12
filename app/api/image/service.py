@@ -3,14 +3,14 @@
 # project package
 from common.res_code import SUCCESS
 from models.image.service import ImageModel
-from models.author.service import AuthorModel
 from models.tag.service import TagModel
 from models.tag_rel_image.service import TagRelImageModel
 from models.user_rel_image.service import UserRelImageModel
-from models.author_rel_image.service import AuthorRelImageModel
+from models.user.service import UserModel
 from utils.tools import get_image_url, create_file_name
 from config.config import DEFAULT_PAGE, DEFAULT_PAGE_SIZE
-from utils.oss import AnimationMinio
+from utils.oss import TencentOss
+from common.enum import UserRelImageActionEnum
 
 # third package
 from flask import g, request
@@ -37,24 +37,42 @@ class ImageService:
 
     @classmethod
     def get_image_detail(cls, request_obj):
+        """
+        获取插画详情
+        1.查询插画信息
+        2.查询插画作者（上传者）信息
+        """
         image_id = request_obj.image_id.data
         image = ImageModel.query_image_detail_by_image_id(image_id)
+
+        user_rel_images = UserRelImageModel.query_infos_by_image_id_2_action(image_id,
+                                                                             action=UserRelImageActionEnum.upload.value)
+
+        user_info = UserModel.query_user_by_id(user_rel_images[0].user_id)
+
         response = {}
         if image:
             image.original_url = get_image_url(image.original_url)
             image.thumbnail_url = get_image_url(image.thumbnail_url)
             response = image.to_json()
 
+        # 将用户信息添加到返回信息中，并去除密码
+        user_info = user_info.to_json()
+        user_info.pop("password")
+        response.update(user_info)
         return SUCCESS, response
 
     @classmethod
-    def get_image_info(cls, request_obj):
+    def get_images_info(cls, request_obj):
+        """
+        查询插画列表信息
+        """
         page = request_obj.page.data or DEFAULT_PAGE
         page_size = request_obj.page_size.data or DEFAULT_PAGE_SIZE
         images = ImageModel.query_image_info(page, page_size)
 
         # 判断图片是否被用户收藏
-        user_rel_images = UserRelImageModel.query_infos_by_user_id(g.user_id)
+        user_rel_images = UserRelImageModel.query_user_rel_image_by_user_id(g.user_id)
         image_ids = [u.image_id for u in user_rel_images]
         result = []
         for i in images:
@@ -62,22 +80,26 @@ class ImageService:
             i.thumbnail_url = get_image_url(i.thumbnail_url)
             result_dict = i.to_json()
             if i.id in image_ids:
-                result_dict["love"] = True
+                result_dict["collect"] = True
             else:
-                result_dict["love"] = False
+                result_dict["collect"] = False
             result.append(result_dict)
         return SUCCESS, result
 
     @classmethod
     def collect_or_cancel(cls, request_obj):
         """
-        收藏或取消收藏
+        收藏或取消收藏，如果是自己上传的图片就不能收藏
         """
-        image_rel_user = UserRelImageModel.query_image_rel_user(g.user_id, request_obj.id.data)
+        image_rel_user = UserRelImageModel.query_image_rel_user_by_user_2_image(g.user_id, request_obj.id.data)
 
         # 如果未收藏就收藏
         if not image_rel_user:
-            UserRelImageModel.add_image_rel_user(user_id=g.user_id, image_id=request_obj.id.data)
+            UserRelImageModel.add_image_rel_user(user_id=g.user_id, image_id=request_obj.id.data,
+                                                 action=UserRelImageActionEnum.collect.value)
+        elif image_rel_user.action == UserRelImageActionEnum.upload.value:
+            return SUCCESS, {}
+
         else:
             UserRelImageModel.delete_image_rel_user(rel_id=image_rel_user.id)
 
@@ -91,7 +113,7 @@ class ImageService:
         page = request_obj.page.data
         page_size = request_obj.page_size.data
 
-        user_rel_image = UserRelImageModel.query_infos_by_user_id(g.user_id)
+        user_rel_image = UserRelImageModel.query_user_rel_image_by_user_id(g.user_id)
         image_ids = [u.image_id for u in user_rel_image]
         # 查询图片信息
         images = ImageModel.query_image_by_image_ids(image_ids=image_ids, page_size=page_size, page=page)
@@ -108,28 +130,14 @@ class ImageService:
         """
         上传图片
         """
-        print(f"文件上传{request.files}")
         original_img = request.files.get("original_img")
         thumbnail_image = request.files.get("thumbnail_img")
         content_type = original_img.headers["Content-Type"]
         file_name = create_file_name()
         # 通过流的方式上传图片
-        minio = AnimationMinio()
-        minio.stream_upload("original/" + file_name, original_img,
-                            content_type=content_type)
-        minio.stream_upload("thumbnail/" + file_name, thumbnail_image,
-                            content_type=content_type)
-
-        # 获取作者id
-        if not request_obj.author_name.data:
-            author_id = g.user_id
-        else:
-            # ·判断作者是否存在不存在就创建一个作者
-            author = AuthorModel.query_author_by_name(request_obj.author_name.data)
-            if not author:
-                author_id = AuthorModel.insert_author(request_obj.author_name.data)
-            else:
-                author_id = author.id
+        tencent_oss = TencentOss()
+        tencent_oss.stream_upload(original_img, "original/" + file_name, )
+        tencent_oss.stream_upload(thumbnail_image, "thumbnail/" + file_name, )
 
         tags = []
         # 1.判断标签是否存在，不存在的情况下新建
@@ -151,7 +159,7 @@ class ImageService:
             image_name=file_name,
             thumbnail_url="thumbnail/" + file_name,
             original_url="original/" + file_name,
-            author_id=author_id,
+            author_id=g.user_id,
             image_desc=request_obj.desc.data,
             title=request_obj.title.data,
         )
@@ -161,7 +169,7 @@ class ImageService:
             TagRelImageModel.add_tag_rel_image(tag_id, image_id)
 
         # 4. 建立作者和image的关联关系
-        AuthorRelImageModel.add_author_rel_image(author_id, image_id)
+        UserRelImageModel.add_image_rel_user(g.user_id, image_id, action=UserRelImageActionEnum.upload.value)
 
         return SUCCESS, {}
 

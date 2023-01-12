@@ -41,7 +41,7 @@ def get_image_url(url):
     protocol = CONF["minio"]["protocol"]
     oss_endpoint = CONF["minio"]["endpoint"]
 
-    return protocol + "://" + oss_endpoint + "/" + "animation" + "/" + url
+    return 'http://localhost:6500' + url
 
 
 def get_token_key(user_id):
