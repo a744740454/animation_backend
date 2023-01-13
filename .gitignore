@@ -55,3 +55,6 @@ sql_back_ups
 animation_web/versions/*
 test.py
 mysqldata
+
+config/dev.yml
+config/prod.yml
