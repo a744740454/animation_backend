@@ -13,7 +13,6 @@ class BaseForm(Form):
         data = request.get_json(silent=True)
         args = request.args.to_dict()
         form = request.form.to_dict()
-        print(request.form.to_dict())
         super(BaseForm, self).__init__(data=data, **args, **form)
 
     def validate_for_api(self):

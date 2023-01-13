@@ -24,10 +24,9 @@ minio:
 
 
 tencent_oss:
-  secret_id: AKID8AuWyR1g3MUbo1pHSddT6PYVvMchctRp
-  secret_key: VNJ6nKmKi3a8X5nGVTJiskMYebK9jNmu
-  region: ap-shanghai
-  token:
-  scheme: https
-  app_id: 1304688700
-  bucket: animation-1304688700
+  secret_id: #
+  secret_key: #
+  region: #
+  scheme: #
+  app_id: #
+  bucket: #
